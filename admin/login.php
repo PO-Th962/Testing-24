@@ -40,9 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-actions">
             <button type="submit" class="btn-submit" style="width: 100%;">Login</button>
         </div>
-        <div style="text-align: center; margin-top: 15px;">
-            <a href="index.php" style="color: #6c757d; font-size: 14px;">กลับหน้าลงทะเบียน</a>
-        </div>
+        
     </form>
 </div>
 </body>
