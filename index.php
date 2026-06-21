@@ -4,6 +4,11 @@ include 'db.php';
 
 $message = '';
 
+if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true) {
+    header('Location: user_login.php');
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['fullname'] ?? '');
     $email = trim($_POST['email'] ?? '');
