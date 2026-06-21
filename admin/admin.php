@@ -73,7 +73,7 @@ $course_summary = $conn->query("SELECT course, COUNT(*) as total FROM users GROU
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel - ระบบจัดการข้อมูล</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
