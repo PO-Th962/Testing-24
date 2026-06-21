@@ -76,7 +76,7 @@ if (isset($_GET['msg'])) {
 <div class="container">
     
     <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #1a73e8;">
-        <h3 style="color: #1a73e8; margin-bottom: 10px;">📊 Dashboard สรุปข้อมูลการลงทะเบียน</h3>
+        <h3 style="color: #1a73e8; margin-bottom: 10px;"> Dashboard สรุปข้อมูลการลงทะเบียน</h3>
         <p>จำนวนผู้ลงทะเบียนทั้งหมด: <strong><?php echo $total_users; ?></strong> คน</p>
         <ul style="margin-top: 10px; margin-left: 20px;">
             <?php foreach($course_summary as $summary): ?>
