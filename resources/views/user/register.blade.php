@@ -3,7 +3,7 @@
 @section('title', 'สมัครสมาชิกผู้ใช้งาน - ระบบลงทะเบียนอบรม คณะเศรษฐศาสตร์ มช.')
 
 @section('content')
-    <h2>👤 สมัครสมาชิกผู้ใช้งานทั่วไป</h2>
+    <h2>สมัครสมาชิกผู้ใช้งานทั่วไป</h2>
     <p class="text-center" style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px;">สร้างบัญชีผู้ใช้งานเพื่อเข้าลงทะเบียนเข้าร่วมโครงการอบรม</p>
 
     @if($errors->has('error'))

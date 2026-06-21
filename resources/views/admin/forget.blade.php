@@ -3,7 +3,7 @@
 @section('title', 'ลืมรหัสผ่านผู้ดูแลระบบ - Admin Portal คณะเศรษฐศาสตร์ มช.')
 
 @section('content')
-    <h2 style="color: #c62828;">🔑 กู้คืนรหัสผ่านผู้ดูแลระบบ</h2>
+    <h2 style="color: #c62828;">กู้คืนรหัสผ่านผู้ดูแลระบบ</h2>
     <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px; text-align: center;">
         กรุณากรอกอีเมลของ Admin ที่ลงทะเบียนไว้เพื่อส่งลิงก์จำลองตั้งรหัสผ่านใหม่
     </p>

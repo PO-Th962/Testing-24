@@ -3,7 +3,7 @@
 @section('title', 'ตั้งรหัสผ่านใหม่สำหรับ Admin - คณะเศรษฐศาสตร์ มช.')
 
 @section('content')
-    <h2 style="color: #c62828;"> ตั้งรหัสผ่านใหม่สำหรับ Admin</h2>
+    <h2 style="color: #c62828;">ตั้งรหัสผ่านใหม่สำหรับ Admin</h2>
     <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px; text-align: center;">
         กรุณากรอกรหัสผ่านใหม่สำหรับบัญชีผู้ดูแลระบบของคุณ
     </p>

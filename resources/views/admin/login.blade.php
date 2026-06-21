@@ -3,7 +3,7 @@
 @section('title', 'เข้าสู่ระบบผู้ดูแลระบบ - Admin Portal คณะเศรษฐศาสตร์ มช.')
 
 @section('content')
-    <h2 style="color: #c62828;">🔑 เข้าสู่ระบบ Admin</h2>
+    <h2 style="color: #c62828;">เข้าสู่ระบบ Admin</h2>
     <p class="text-center" style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px;">ส่วนควบคุมระบบงานสำหรับเจ้าหน้าที่และผู้ดูแลระบบหลัก</p>
 
     @if($errors->has('error'))

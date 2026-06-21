@@ -57,7 +57,7 @@
 
 @section('content')
     <div class="user-bar">
-        <span class="user-info">👤 บัญชีผู้ใช้: <strong>{{ session('user_name') }}</strong></span>
+        <span class="user-info">บัญชีผู้ใช้: <strong>{{ session('user_name') }}</strong></span>
         <form method="POST" action="{{ route('user.logout') }}" style="display: inline;">
             @csrf
             <button type="submit" class="logout-link" style="background: none; border: none; padding: 0; cursor: pointer; font-size: inherit;">ออกจากระบบ</button>

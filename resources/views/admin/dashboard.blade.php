@@ -174,7 +174,7 @@
 
 @section('content')
     <div class="admin-header">
-        <h2 class="admin-title">💻 ระบบจัดการสำหรับผู้ดูแลระบบ (Admin Panel)</h2>
+        <h2 class="admin-title">ระบบจัดการสำหรับผู้ดูแลระบบ (Admin Panel)</h2>
         <form method="POST" action="{{ route('admin.logout') }}">
             @csrf
             <button type="submit" class="logout-btn" style="border: none; cursor: pointer;">ออกจากระบบ</button>
@@ -220,7 +220,7 @@
 
     <!-- Day Calculator -->
     <div class="calc-section">
-        <h3 class="calc-title">📊 โปรแกรมคำนวณวันจัดอบรมขั้นต่ำ (สูงสุด 35 คน/วัน)</h3>
+        <h3 class="calc-title">โปรแกรมคำนวณวันจัดอบรมขั้นต่ำ (สูงสุด 35 คน/วัน)</h3>
         <form method="POST" action="{{ route('admin.calculate') }}" class="calc-form">
             @csrf
             <div class="calc-input-wrapper">
