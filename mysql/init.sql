@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fullname VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    Tel VARCHAR(20) NOT NULL,
+    course VARCHAR(255) NOT NULL,
+    class_date DATE NOT NULL,
+    pdpa_consent TINYINT(1) DEFAULT 0  
+);
