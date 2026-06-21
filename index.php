@@ -54,14 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" class="form-control" name="Tel" required>
         </div>
         <div class="form-group">
-            <label>หลักสูตรการอบรม</label>
+            <label>หลักสูตรที่สนใจ</label>
             <select class="form-control" name="course" required>
-                <option value="">เลือกหลักสูตร</option>
-                <option value="หลักสูตรการช่วยเหลือผู้ป่วยเบื้องต้น">หลักสูตรการช่วยเหลือผู้ป่วยเบื้องต้น</option>
-                <option value="หลักสูตรการใช้เครื่องมือทางการแพทย์">หลักสูตรการใช้เครื่องมือทางการแพทย์</option>
-                <option value="หลักสูตรการรักษาแผลติดเชื้อ">หลักสูตรการรักษาแผลติดเชื้อ</option>
+                <option value="">-- กรุณาเลือกหลักสูตร --</option>
+                <option value="การวิเคราะห์ข้อมูลด้วย Excel">การวิเคราะห์ข้อมูลด้วย Excel</option>
+                <option value="การเขียนโปรแกรมด้วย Python">การเขียนโปรแกรมด้วย Python</option>
+                <option value="การสร้าง Dashboard ด้วย Power BI">การสร้าง Dashboard ด้วย Power BI</option>
             </select>
-        </div>
         <div class="form-group">
             <label>เลือกวันที่เข้าอบรม</label>
             <input type="date" class="form-control" name="class_date" required>

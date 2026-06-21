@@ -1,7 +1,7 @@
 <?php
 session_start();
 ob_start();
-// ระบบรักษาความปลอดภัย: ถ้าไม่ได้ล็อกอิน ให้เด้งกลับหน้า Login ทันที
+
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: login.php');
     exit;
@@ -9,16 +9,14 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 
 include 'db.php';
 
-// ทำการ Logout เมื่อกดปุ่ม
+
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     session_destroy();
     header('Location: login.php');
     exit;
 }
 
-// ==========================================
-// ส่วน OOP สำหรับฟีเจอร์คำนวณวันอบรมขั้นต่ำ
-// ==========================================
+
 class TrainingCalculator {
     private $totalApplicants;
     private $maxCapacityPerDay = 35;
@@ -82,12 +80,12 @@ $course_summary = $conn->query("SELECT course, COUNT(*) as total FROM users GROU
 <div class="container" style="max-width: 1000px;">
     
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2>👑 ระบบจัดการสำหรับผู้ดูแลระบบ (Admin)</h2>
+        <h2> ระบบจัดการสำหรับผู้ดูแลระบบ (Admin)</h2>
         <a href="admin.php?action=logout" style="background:#dc3545; color:white; padding:8px 15px; text-decoration:none; border-radius:5px; font-size:14px;">ออกจากระบบ 🚪</a>
     </div>
 
     <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #1a73e8;">
-        <h3 style="color: #1a73e8; margin-bottom: 10px;">📊 Dashboard สรุปยอดผู้ลงทะเบียน</h3>
+        <h3 style="color: #1a73e8; margin-bottom: 10px;">Dashboard สรุปยอดผู้ลงทะเบียน</h3>
         <p>จำนวนผู้ลงทะเบียนทั้งหมดในระบบ: <strong><?php echo $total_users; ?></strong> คน</p>
         <ul style="margin-top: 10px; margin-left: 20px;">
             <?php foreach($course_summary as $summary): ?>
@@ -97,7 +95,7 @@ $course_summary = $conn->query("SELECT course, COUNT(*) as total FROM users GROU
     </div>
 
     <div style="background: #f1f8e9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #7cb342;">
-        <h3 style="color: #7cb342; margin-bottom: 15px;">🧮 โปรแกรมคำนวณวันจัดอบรมขั้นต่ำ (รองรับสูงสุด 35 คน/วัน)</h3>
+        <h3 style="color: #7cb342; margin-bottom: 15px;"> โปรแกรมคำนวณวันจัดอบรมขั้นต่ำ (รองรับสูงสุด 35 คน/วัน)</h3>
         <form method="POST" action="admin.php" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
             <input type="hidden" name="calc_action" value="1">
             <div style="flex: 1;">
@@ -109,7 +107,7 @@ $course_summary = $conn->query("SELECT course, COUNT(*) as total FROM users GROU
 
         <?php if (!empty($applicantsInput)): ?>
             <div style="margin-top: 15px; font-size: 16px; font-weight: bold; color: #33691e;">
-                🎯 ผลการคำนวณ: ต้องใช้เวลาอบรมขั้นต่ำทั้งหมด <u><?php echo $requiredDays; ?></u> วัน
+                 ผลการคำนวณ: ต้องใช้เวลาอบรมขั้นต่ำทั้งหมด <u><?php echo $requiredDays; ?></u> วัน
             </div>
             <div style="max-width: 300px; margin: 20px auto 0 auto; height: 300px;">
                 <canvas id="adminPieChart"></canvas>
@@ -117,7 +115,7 @@ $course_summary = $conn->query("SELECT course, COUNT(*) as total FROM users GROU
         <?php endif; ?>
     </div>
 
-    <h3>📋 รายชื่อผู้ลงทะเบียนเข้าอบรมทั้งหมด</h3>
+    <h3>รายชื่อผู้ลงทะเบียนเข้าอบรมทั้งหมด</h3>
     <table style="margin-top: 15px;">
         <thead>
             <tr>
