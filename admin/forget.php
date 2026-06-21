@@ -12,21 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $admin = $stmt->fetch();
 
     if ($admin) {
-        // 1. สร้าง Token แบบสุ่มที่มีความปลอดภัยสูง
+        
         $token = bin2hex(random_bytes(32));
-        // 2. ตั้งเวลาหมดอายุของลิงก์กู้คืน (เช่น อีก 15 นาทีข้างหน้า)
+        
         $expiry = date('Y-m-d H:i:s', strtotime('+15 minutes'));
 
-        // 3. บันทึก Token และเวลาหมดอายุลง Database ของ Admin คนนั้น
+        
         $updateStmt = $conn->prepare("UPDATE admins SET reset_token = ?, token_expiry = ? WHERE email = ?");
         $updateStmt->execute([$token, $expiry, $email]);
 
-        // 4. สร้างลิงก์ที่จะแนบไปในอีเมล
+        
         $resetLink = "http://localhost:8080/admin/reset.php?token=" . $token;
 
         $message = "<div class='message' style='background:#d4edda; color:#155724;'>ระบบได้ตรวจสอบตัวตนสำเร็จแล้ว! กรุณาตรวจสอบอีเมลจำลองด้านล่าง</div>";
         
-        // กล่องข้อความจำลองอีเมลส่งเข้าเครื่องผู้ใช้จริง
+        
         $simulatedEmail = "
             <div style='background: #fff; border: 2px dashed #1a73e8; padding: 20px; margin-top: 20px; border-radius: 8px;'>
                 <h4 style='color: #1a73e8; margin-top: 0;'>📧 [กล่องจำลองระบบส่งอีเมลเข้าสู่ Inbox]</h4>

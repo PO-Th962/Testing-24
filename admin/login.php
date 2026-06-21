@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // ตรวจสอบ Username และ Password (ในห้องสอบใช้แบบ Hardcode เพื่อความรวดเร็วได้ครับ)
+    
     if ($username === 'admin' && $password === 'password') {
         $_SESSION['admin_logged_in'] = true;
         header('Location: admin.php');

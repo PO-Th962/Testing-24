@@ -8,13 +8,13 @@ $token = $_GET['token'] ?? '';
 if (empty($token)) {
     $message = "<div class='message' style='background:#f8d7da; color:#721c24;'>ไม่พบรหัส Token สำหรับการเข้าถึงหน้านี้</div>";
 } else {
-    // ตรวจสอบ Token ว่าตรงในระบบ และเวลาปัจจุบันยังไม่เกินเวลาหมดอายุ (NOW())
+
     $stmt = $conn->prepare("SELECT * FROM admins WHERE reset_token = ? AND token_expiry > NOW()");
     $stmt->execute([$token]);
     $admin = $stmt->fetch();
 
     if ($admin) {
-        $validToken = true; // Token ถูกต้อง แสดงฟอร์มเปลี่ยนรหัสได้
+        $validToken = true; 
     } else {
         $message = "<div class='message' style='background:#f8d7da; color:#721c24;'>Token ไม่ถูกต้อง หรือ ลิงก์หมดอายุไปแล้ว (เกิน 15 นาที)</div>";
     }
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $validToken) {
     $confirm_password = $_POST['confirm_password'] ?? '';
 
     if ($new_password === $confirm_password) {
-        // อัปเดตรหัสผ่านใหม่ และทำการล้าง Token ออกทันที (Set เป็น NULL) เพื่อความปลอดภัยไม่ให้ใช้ซ้ำได้อีก
+       
         $updateStmt = $conn->prepare("UPDATE admins SET password = ?, reset_token = NULL, token_expiry = NULL WHERE reset_token = ?");
         $updateStmt->execute([$new_password, $token]);
 
