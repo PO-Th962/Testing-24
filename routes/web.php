@@ -46,6 +46,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/forget', [AdminAuthController::class, 'showForget'])->name('admin.forget');
         Route::post('/forget', [AdminAuthController::class, 'forget'])->name('admin.forget.submit');
 
+        // ยืนยันรหัส PIN (Admin PIN Verification)
+        Route::get('/verify-pin', [AdminAuthController::class, 'showVerifyPin'])->name('admin.verify_pin');
+        Route::post('/verify-pin', [AdminAuthController::class, 'verifyPin'])->name('admin.verify_pin.submit');
+
         // ตั้งรหัสผ่านแอดมินใหม่ (Admin Password Reset)
         Route::get('/reset', [AdminAuthController::class, 'showReset'])->name('admin.reset');
         Route::post('/reset', [AdminAuthController::class, 'reset'])->name('admin.reset.submit');

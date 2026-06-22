@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             ['username' => 'admin'],
             [
                 'password' => Hash::make('password'),
-                'email' => 'admin@econ.cmu.ac.th',
+                'email' => 'admin@gmail.com',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

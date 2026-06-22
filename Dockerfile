@@ -4,7 +4,18 @@ FROM php:8.4-apache
 RUN a2enmod rewrite
 
 # ติดตั้งส่วนเสริม pdo และ pdo_mysql สำหรับเชื่อมต่อฐานข้อมูล
-RUN docker-php-ext-install pdo pdo_mysql
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+
+# ติดตั้ง Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # เปลี่ยน Apache Document Root ไปยังโฟลเดอร์ public ของ Laravel
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public

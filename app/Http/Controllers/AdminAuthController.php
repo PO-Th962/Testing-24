@@ -6,6 +6,8 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminResetPinMail;
 
 class AdminAuthController extends Controller
 {
@@ -48,73 +50,86 @@ class AdminAuthController extends Controller
         $admin = Admin::where('email', $request->email)->first();
 
         if ($admin) {
-            $token = Str::random(64);
+            $pin = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
             $expiry = now()->addMinutes(15);
 
             $admin->update([
-                'reset_token' => $token,
+                'reset_token' => $pin,
                 'token_expiry' => $expiry,
             ]);
 
-            $resetLink = route('admin.reset', ['token' => $token]);
+            // แสดง PIN ออกทาง Terminal ของ Docker เพื่อความสะดวกในการทดสอบ
+            \Illuminate\Support\Facades\Log::channel('stderr')->info("\n==================================\nADMIN RESET PIN สำหรับ {$admin->email} คือ: {$pin}\n==================================\n");
 
-            $simulatedEmail = "
-                <div style='background: #fff; border: 2px dashed #1a73e8; padding: 20px; margin-top: 20px; border-radius: 8px;'>
-                    <h4 style='color: #1a73e8; margin-top: 0;'>📧 [กล่องจำลองระบบส่งอีเมลเข้าสู่ Inbox]</h4>
-                    <p><strong>จาก:</strong> security-system@econ.cmu.ac.th</p>
-                    <p><strong>ถึง:</strong> " . htmlspecialchars($admin->email) . "</p>
-                    <p><strong>หัวข้อ:</strong> ยืนยันคำขอเปลี่ยนรหัสผ่านระบบ Admin</p>
-                    <hr style='border:0; border-top:1px solid #ccc; margin:10px 0;'>
-                    <p>เรียนผู้ดูแลระบบ, มีคำขอเปลี่ยนรหัสผ่านเข้ามาในระบบ หากคุณเป็นผู้ส่งคำขอนี้ กรุณาคลิกลิงก์ด้านล่างเพื่อตั้งรหัสผ่านใหม่ภายใน 15 นาที:</p>
-                    <p style='text-align:center; margin:20px 0;'>
-                        <a href='" . $resetLink . "' style='background:#1a73e8; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;'>คลิกที่นี่เพื่อตั้งรหัสผ่านใหม่</a>
-                    </p>
-                    <small style='color:red;'>*ลิงก์นี้จะหมดอายุในเวลา: " . $expiry->format('Y-m-d H:i:s') . "</small>
-                </div>";
+            try {
+                Mail::to($admin->email)->send(new AdminResetPinMail($pin));
+            } catch (\Exception $e) {
+                return back()->withErrors(['error' => 'ไม่สามารถส่งอีเมลได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง'])->withInput();
+            }
 
-            return back()->with([
-                'success' => 'ระบบได้ตรวจสอบตัวตนสำเร็จแล้ว! กรุณาตรวจสอบอีเมลจำลองด้านล่าง',
-                'simulatedEmail' => $simulatedEmail
+            return redirect()->route('admin.verify_pin')->with([
+                'success' => 'ระบบได้ส่งรหัส PIN 6 หลักไปยังอีเมลของคุณแล้ว',
+                'verify_email' => $admin->email
             ]);
         }
 
         return back()->withErrors(['error' => 'ไม่พบที่อยู่อีเมลนี้ในระบบผู้ดูแลระบบ!'])->withInput();
     }
 
-    public function showReset(Request $request)
+    public function showVerifyPin(Request $request)
     {
-        $token = $request->query('token');
+        $email = session('verify_email') ?? $request->old('email');
+        return view('admin.verify_pin', ['email' => $email]);
+    }
 
-        if (empty($token)) {
-            return redirect()->route('admin.forget')->withErrors(['error' => 'ไม่พบรหัส Token สำหรับการเข้าถึงหน้านี้']);
-        }
+    public function verifyPin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'pin' => 'required|string|size:6',
+        ]);
 
-        $admin = Admin::where('reset_token', $token)
+        $admin = Admin::where('email', $request->email)
+            ->where('reset_token', $request->pin)
             ->where('token_expiry', '>', now())
             ->first();
 
         if ($admin) {
-            return view('admin.reset', ['token' => $token, 'validToken' => true]);
+            session(['reset_admin_email' => $admin->email]);
+            return redirect()->route('admin.reset')->with('success', 'รหัส PIN ถูกต้อง กรุณาตั้งรหัสผ่านใหม่');
         }
 
-        return view('admin.reset', ['token' => $token, 'validToken' => false])
-            ->withErrors(['error' => 'Token ไม่ถูกต้อง หรือ ลิงก์หมดอายุไปแล้ว (เกิน 15 นาที)']);
+        return back()->withErrors(['error' => 'รหัส PIN ไม่ถูกต้อง หรือหมดอายุไปแล้ว (เกิน 15 นาที)'])->withInput();
+    }
+
+    public function showReset(Request $request)
+    {
+        $email = session('reset_admin_email');
+
+        if (empty($email)) {
+            return redirect()->route('admin.forget')->withErrors(['error' => 'ไม่ได้รับอนุญาตให้เข้าถึงหน้านี้ กรุณายืนยัน PIN ก่อน']);
+        }
+
+        return view('admin.reset');
     }
 
     public function reset(Request $request)
     {
+        $email = session('reset_admin_email');
+
+        if (empty($email)) {
+            return redirect()->route('admin.forget')->withErrors(['error' => 'ไม่ได้รับอนุญาตให้เข้าถึงหน้านี้ กรุณายืนยัน PIN ก่อน']);
+        }
+
         $request->validate([
-            'token' => 'required|string',
             'new_password' => 'required|string|min:4',
             'confirm_password' => 'required|string|same:new_password',
         ]);
 
-        $admin = Admin::where('reset_token', $request->token)
-            ->where('token_expiry', '>', now())
-            ->first();
+        $admin = Admin::where('email', $email)->first();
 
         if (!$admin) {
-            return redirect()->route('admin.forget')->withErrors(['error' => 'Token ไม่ถูกต้อง หรือ ลิงก์หมดอายุไปแล้ว']);
+            return redirect()->route('admin.forget')->withErrors(['error' => 'เกิดข้อผิดพลาด ไม่พบข้อมูลบัญชี']);
         }
 
         $admin->update([
@@ -123,7 +138,9 @@ class AdminAuthController extends Controller
             'token_expiry' => null,
         ]);
 
-        return redirect()->route('admin.login')->with('success', 'เปลี่ยนรหัสผ่านใหม่สำเร็จแล้วค่ะ! คลิกที่นี่เพื่อล็อกอินใหม่');
+        session()->forget('reset_admin_email');
+
+        return redirect()->route('admin.login')->with('success', 'เปลี่ยนรหัสผ่านใหม่สำเร็จแล้วค่ะ! ล็อกอินใหม่ได้เลย');
     }
 
     public function logout(Request $request)
