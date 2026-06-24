@@ -441,7 +441,7 @@
         </div>
     @endif
 
-    <!-- Metrics -->
+
     <div class="metrics-grid">
         <div class="metric-card">
             <h3>ผู้ลงทะเบียนทั้งหมด</h3>
@@ -463,7 +463,7 @@
         </div>
     </div>
 
-    <!-- Course Management Section -->
+
     <div class="course-manage-section">
         <h3 class="course-manage-title">จัดการหลักสูตร (เพิ่ม/ลบ หลักสูตร)</h3>
 
@@ -493,7 +493,7 @@
     </div>
 
 
-    <!-- Registration List Table -->
+
     <div class="section-header">
         <h3 class="section-title">รายชื่อผู้ลงทะเบียนเข้าอบรมทั้งหมด</h3>
         <form method="GET" action="{{ route('admin.dashboard') }}" class="filter-form">
@@ -537,7 +537,7 @@
                 @empty
                     <tr>
                         <td colspan="6" class="text-center" style="color: var(--text-muted); padding: 30px 16px;">
-                            ยังไม่มีรายชื่อผู้ลงทะเบียนในระบบค่ะ</td>
+                            ยังไม่มีรายชื่อผู้ลงทะเบียนในระบบ</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User; // ตาราง users เก็บผู้ลงทะเบียนเข้าอบรม
+use App\Models\User;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -35,7 +35,7 @@ class RegistrationController extends Controller
                 'pdpa_consent' => 1,
             ]);
 
-            return back()->with('success', 'ลงทะเบียนสำเร็จเรียบร้อยแล้วค่ะ!');
+            return back()->with('success', 'ลงทะเบียนสำเร็จเรียบร้อยแล้ว');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'เกิดข้อผิดพลาด: ' . $e->getMessage()])->withInput();
         }

@@ -46,7 +46,7 @@ class AdminDashboardController extends Controller
         $user = User::find($id);
         if ($user) {
             $user->delete();
-            return redirect()->route('admin.dashboard')->with('success', 'ลบข้อมูลผู้ลงทะเบียนสำเร็จแล้วค่ะ');
+            return redirect()->route('admin.dashboard')->with('success', 'ลบข้อมูลผู้ลงทะเบียนสำเร็จแล้ว');
         }
         return redirect()->route('admin.dashboard')->withErrors(['error' => 'ไม่พบข้อมูลที่ต้องการลบ']);
     }
@@ -61,7 +61,7 @@ class AdminDashboardController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->route('admin.dashboard')->with('success', 'เพิ่มหลักสูตรใหม่สำเร็จแล้วค่ะ');
+        return redirect()->route('admin.dashboard')->with('success', 'เพิ่มหลักสูตรใหม่สำเร็จแล้ว');
     }
 
     public function deleteCourse($id)
@@ -70,7 +70,7 @@ class AdminDashboardController extends Controller
             $course = Course::find($id);
             if ($course) {
                 $course->delete();
-                return redirect()->route('admin.dashboard')->with('success', 'ลบหลักสูตร ' . $course->name . ' สำเร็จแล้วค่ะ');
+                return redirect()->route('admin.dashboard')->with('success', 'ลบหลักสูตร ' . $course->name . ' สำเร็จแล้ว');
             }
             return redirect()->route('admin.dashboard')->withErrors(['error' => 'ไม่พบข้อมูลหลักสูตรที่ต้องการลบ (ID: ' . $id . ')']);
         } catch (\Exception $e) {

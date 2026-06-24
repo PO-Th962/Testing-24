@@ -64,18 +64,18 @@ class UserAuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Auto-login หลังสมัครสมาชิกสำเร็จ ไม่ต้องให้ user login ซ้ำ
+
         session([
             'user_logged_in' => true,
             'user_name' => $request->username,
         ]);
 
-        return redirect()->route('registration.form')->with('success', 'สมัครสมาชิกสำเร็จ! กรุณากรอกข้อมูลลงทะเบียนเข้าอบรมค่ะ');
+        return redirect()->route('registration.form')->with('success', 'สมัครสมาชิกสำเร็จ! กรุณากรอกข้อมูลลงทะเบียนเข้าอบรม');
     }
 
     public function logout(Request $request)
     {
         $request->session()->forget(['user_logged_in', 'user_name']);
-        return redirect()->route('user.login')->with('success', 'ออกจากระบบเรียบร้อยแล้วค่ะ');
+        return redirect()->route('user.login')->with('success', 'ออกจากระบบเรียบร้อยแล้ว');
     }
 }

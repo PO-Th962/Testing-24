@@ -140,12 +140,12 @@ class AdminAuthController extends Controller
 
         session()->forget('reset_admin_email');
 
-        return redirect()->route('admin.login')->with('success', 'เปลี่ยนรหัสผ่านใหม่สำเร็จแล้วค่ะ! ล็อกอินใหม่ได้เลย');
+        return redirect()->route('admin.login')->with('success', 'เปลี่ยนรหัสผ่านใหม่สำเร็จแล้ว ล็อกอินใหม่ได้เลย');
     }
 
     public function logout(Request $request)
     {
         $request->session()->forget('admin_logged_in');
-        return redirect()->route('admin.login')->with('success', 'ออกจากระบบแอดมินเรียบร้อยแล้วค่ะ');
+        return redirect()->route('admin.login')->with('success', 'ออกจากระบบแอดมินเรียบร้อยแล้ว');
     }
 }
