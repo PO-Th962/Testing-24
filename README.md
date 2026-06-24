@@ -5,13 +5,15 @@
 # ระบบ admin 
 username = admin 
 password = password 
+#User 
+ แนะนำให้ละเบียนใหม่เเล้ว เลือกหลักสูตร เเล้วส่ง ข้อมูลให้ admin ให้ดูจำนวน คนที่สมัคร เข้า หลักสูตร
 # กู้รหัสผ่าน 
 - email ที่ในการกู้
 - admin@gmail.com
   อธิบาย เมื่อทำการยืนยันเเล้ว รหัสPin  6 หลัก จะเเสดงที่ Terminal เราจะรหัส pin 6 นั้น ไปใส่ web เพื่อเป็นก่ียืนยัน การเเก้ไขรหัสผ่าน
   (เป็นเวอร์ชั่นทดสอบ ก่อนจะ link token ไป email)
 
-Run ระบบ ต้องรัน docker compose  up ใน terminal แล้วไปที่ url localhost8080 เพื่อ ทดสอบระบบ 
+Run ระบบ ต้องรัน docker compose  up ใน terminal แล้วไปที่ url localhost8080 (user) localhost8080/admin (admin) เพื่อ ทดสอบระบบ 
 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
